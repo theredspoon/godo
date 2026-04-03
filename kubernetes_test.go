@@ -48,6 +48,9 @@ func TestKubernetesClusters_ListClusters(t *testing.T) {
 			RdmaSharedDevicePlugin: &KubernetesRdmaSharedDevicePlugin{
 				Enabled: PtrTo(true),
 			},
+			CorednsAutoscaler: &KubernetesCorednsAutoscaler{
+				Enabled: PtrTo(true),
+			},
 			SSO: &KubernetesClusterSSO{
 				Enabled: PtrTo(true),
 			},
@@ -154,6 +157,9 @@ func TestKubernetesClusters_ListClusters(t *testing.T) {
 				"enabled": true
 			},
 			"rdma_shared_dev_plugin": {
+				"enabled": true
+			},
+			"coredns_autoscaler": {
 				"enabled": true
 			},
 			"sso": {
@@ -315,6 +321,9 @@ func TestKubernetesClusters_Get(t *testing.T) {
 		RdmaSharedDevicePlugin: &KubernetesRdmaSharedDevicePlugin{
 			Enabled: PtrTo(true),
 		},
+		CorednsAutoscaler: &KubernetesCorednsAutoscaler{
+			Enabled: PtrTo(true),
+		},
 		SSO: &KubernetesClusterSSO{
 			Enabled:  PtrTo(true),
 			Required: PtrTo(false),
@@ -383,6 +392,9 @@ func TestKubernetesClusters_Get(t *testing.T) {
 			"enabled": true
 		},
 		"rdma_shared_dev_plugin": {
+			"enabled": true
+		},
+		"coredns_autoscaler": {
 			"enabled": true
 		},
 		"sso": {
@@ -649,6 +661,9 @@ func TestKubernetesClusters_Create(t *testing.T) {
 		RdmaSharedDevicePlugin: &KubernetesRdmaSharedDevicePlugin{
 			Enabled: PtrTo(true),
 		},
+		CorednsAutoscaler: &KubernetesCorednsAutoscaler{
+			Enabled: PtrTo(true),
+		},
 		SSO: &KubernetesClusterSSO{
 			Enabled:  PtrTo(true),
 			Required: PtrTo(false),
@@ -704,6 +719,9 @@ func TestKubernetesClusters_Create(t *testing.T) {
 		RdmaSharedDevicePlugin: &KubernetesRdmaSharedDevicePlugin{
 			Enabled: PtrTo(true),
 		},
+		CorednsAutoscaler: &KubernetesCorednsAutoscaler{
+			Enabled: PtrTo(true),
+		},
 		SSO: &KubernetesClusterSSO{
 			Enabled: PtrTo(true),
 		},
@@ -752,6 +770,9 @@ func TestKubernetesClusters_Create(t *testing.T) {
 			"enabled": true
 		},
 		"rdma_shared_dev_plugin": {
+			"enabled": true
+		},
+		"coredns_autoscaler": {
 			"enabled": true
 		},
 		"sso": {
@@ -972,6 +993,9 @@ func TestKubernetesClusters_Update(t *testing.T) {
 		RdmaSharedDevicePlugin: &KubernetesRdmaSharedDevicePlugin{
 			Enabled: PtrTo(true),
 		},
+		CorednsAutoscaler: &KubernetesCorednsAutoscaler{
+			Enabled: PtrTo(true),
+		},
 		SSO: &KubernetesClusterSSO{
 			Enabled: PtrTo(false),
 		},
@@ -1005,6 +1029,9 @@ func TestKubernetesClusters_Update(t *testing.T) {
 			Enabled: PtrTo(true),
 		},
 		RdmaSharedDevicePlugin: &KubernetesRdmaSharedDevicePlugin{
+			Enabled: PtrTo(true),
+		},
+		CorednsAutoscaler: &KubernetesCorednsAutoscaler{
 			Enabled: PtrTo(true),
 		},
 		SSO: &KubernetesClusterSSO{
@@ -1071,13 +1098,16 @@ func TestKubernetesClusters_Update(t *testing.T) {
 		"rdma_shared_dev_plugin": {
 			"enabled": true
 		},
+		"coredns_autoscaler": {
+			"enabled": true
+		},
 		"sso": {
 			"enabled": false
 		}
 	}
 }`
 
-	expectedReqJSON := `{"name":"antoine-test-cluster","tags":["cluster-tag-1","cluster-tag-2"],"maintenance_policy":{"start_time":"00:00","duration":"","day":"monday"},"surge_upgrade":true,"control_plane_firewall":{"enabled":true,"allowed_addresses":["1.2.3.4/32"]},"cluster_autoscaler_configuration":{"scale_down_utilization_threshold":0.2,"scale_down_unneeded_time":"1m27s","expanders":[]},"routing_agent":{"enabled":true},"amd_gpu_device_plugin":{"enabled":true},"amd_gpu_device_metrics_exporter_plugin":{"enabled":true},"nvidia_gpu_device_plugin":{"enabled":true},"rdma_shared_dev_plugin":{"enabled":true},"sso":{"enabled":false}}
+	expectedReqJSON := `{"name":"antoine-test-cluster","tags":["cluster-tag-1","cluster-tag-2"],"maintenance_policy":{"start_time":"00:00","duration":"","day":"monday"},"surge_upgrade":true,"control_plane_firewall":{"enabled":true,"allowed_addresses":["1.2.3.4/32"]},"cluster_autoscaler_configuration":{"scale_down_utilization_threshold":0.2,"scale_down_unneeded_time":"1m27s","expanders":[]},"routing_agent":{"enabled":true},"amd_gpu_device_plugin":{"enabled":true},"amd_gpu_device_metrics_exporter_plugin":{"enabled":true},"nvidia_gpu_device_plugin":{"enabled":true},"rdma_shared_dev_plugin":{"enabled":true},"coredns_autoscaler":{"enabled":true},"sso":{"enabled":false}}
 `
 
 	mux.HandleFunc("/v2/kubernetes/clusters/8d91899c-0739-4a1a-acc5-deadbeefbb8f", func(w http.ResponseWriter, r *http.Request) {
